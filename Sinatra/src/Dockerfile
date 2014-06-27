@@ -11,4 +11,4 @@ RUN cd /src
 
 EXPOSE 4567
 
-CMD ["ruby", "/src/app.rb"]
+ENTRYPOINT ["ruby", "/src/app.rb"]
