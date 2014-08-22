@@ -44,6 +44,11 @@ WantedBy=sockets.target
 - `exit`
 - `docker ps`
 
+## Help with Docker commands
+
+- `docker help` lists all commands
+- `docker help [command]` lists all options for specified command
+
 ## CMD vs ENTRYPOINT
 
 http://stackoverflow.com/questions/21553353/what-is-the-difference-between-cmd-and-entrypoint-in-a-dockerfile
