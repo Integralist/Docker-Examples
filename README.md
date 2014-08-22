@@ -62,7 +62,9 @@ http://stackoverflow.com/questions/21553353/what-is-the-difference-between-cmd-a
 
 Effectively, Docker has a default `ENTRYPOINT` which is `/bin/sh -c`. 
 
-A typical Docker command will look like `docker run -i -t {IMAGE_NAME} {COMMAND}` where `{COMMAND}` is (for example) `bash` 
+A typical Docker command will look like (where, for example `{COMMAND}` is `bash`):
+
+`docker run -i -t {IMAGE_NAME} {COMMAND}` 
 
 e.g. `docker run -i -t MY_IMAGE bash`
 
