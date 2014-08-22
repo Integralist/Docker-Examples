@@ -9,7 +9,7 @@ We're going to use the latter option as it is much more reliable (and less confu
 
 ## Exposing the Docker daemon
 
-If you just do a `vagrant up` and try to run a Docker command (such as `docker ps`) then you'll just get an error, like: `Cannot connect to the Docker daemon. Is 'docker -d' running on this host?`.
+If you just do a `vagrant up` and try to run a Docker command (such as `docker ps`) then you'll get an error, like: `Cannot connect to the Docker daemon. Is 'docker -d' running on this host?`.
 
 For the host to be able to use the Docker CLI, the Docker daemon on CoreOS needs to be exposed via a TCP port (as we're setting an ip address to access the CLI like so: `export DOCKER_HOST=tcp://172.17.8.100:2375`).
 
