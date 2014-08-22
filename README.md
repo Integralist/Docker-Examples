@@ -59,3 +59,11 @@ WantedBy=sockets.target
 ## CMD vs ENTRYPOINT
 
 http://stackoverflow.com/questions/21553353/what-is-the-difference-between-cmd-and-entrypoint-in-a-dockerfile
+
+Effectively, Docker has a default `ENTRYPOINT` which is `/bin/sh -c`. 
+
+A typical Docker command will look like `docker run -i -t {IMAGE_NAME} {COMMAND}` where `{COMMAND}` is (for example) `bash` 
+
+e.g. `docker run -i -t MY_IMAGE bash`
+
+In the above example you're passing the command `bash` to the default `ENTRYPOINT` (`/bin/sh -c`) which would drop us into a Bash shell ready to execute some more commands within the Docker container.
