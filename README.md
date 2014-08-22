@@ -67,3 +67,9 @@ A typical Docker command will look like `docker run -i -t {IMAGE_NAME} {COMMAND}
 e.g. `docker run -i -t MY_IMAGE bash`
 
 In the above example you're passing the command `bash` to the default `ENTRYPOINT` (`/bin/sh -c`) which would drop us into a Bash shell ready to execute some more commands within the Docker container.
+
+In the `Dockerfile` you can change the `ENTRYPOINT` to be something else, so you could change it to be the `cat` command instead of `sh` (e.g. `ENTRYPOINT ["/bin/cat"]`). 
+
+If you did that for your Docker container then you could pass in a "command" to the container like so:
+
+`docker run -i -t MY_IMAGE /etc/passwd` which would pass the command `/etc/passwd` to the `cat` command
