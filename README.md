@@ -1,5 +1,12 @@
 # Docker
 
+- [Introduction](#introduction)
+- [Exposing the Docker daemon](#exposing-the-docker-daemon)
+- [Help with Docker commands](#help-with-docker-commands)
+- [CMD vs ENTRYPOINT](#cmd-vs-entrypoint)
+
+## Introduction
+
 Getting Docker set-up on a non-Linux environment (such as a Mac) can be done in one of two ways:
 
 1. Use Docker's "Boot2Docker" VM (which relies on Vagrant doing port forwarding)
