@@ -7,7 +7,7 @@
 
 ## Introduction
 
-Getting Docker set-up on a non-Linux environment (such as a Mac) can be done in one of two ways:
+Getting Docker set-up on a non-Linux environment (such as a Mac) can be done in a few ways; below are a few popular options:
 
 1. Use Docker's "Boot2Docker" VM (uses VirtualBox to set-up the VM)
 2. Use a CoreOS VM via Vagrant (with some modifications, such as exposing a private ip)
