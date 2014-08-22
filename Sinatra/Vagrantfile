@@ -1,5 +1,4 @@
 $update_channel = "alpha"
-# $expose_docker_tcp = 2375
 
 Vagrant.configure("2") do |config|
 
