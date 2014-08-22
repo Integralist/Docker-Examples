@@ -21,14 +21,6 @@ Vagrant.configure("2") do |config|
 
   config.vm.hostname = "coreos-%s" % $update_channel
 
-  # Docker API ports
-  # Allows us to run Docker commands from outside of the VM
-  config.vm.network "forwarded_port", guest: 2375, host: 2375, auto_correct: true
-
-  # Custom ports
-  # Such as the Ruby/Sinatra application which connects to port 4567 on localhost
-  config.vm.network "forwarded_port", guest: 4567, host: 4567, auto_correct: true
-
   config.vm.provider :virtualbox do |vb|
     vb.memory = 1024
     vb.cpus = 1
