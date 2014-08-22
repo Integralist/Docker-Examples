@@ -22,7 +22,7 @@ For the host to be able to use the Docker CLI, the Docker daemon on CoreOS needs
 
 The following are the steps required to do this:
 
-Add `export DOCKER_HOST=tcp://172.17.8.100:2375`` to your `.zshrc` (or `.bashrc`) configuration file (as per the private ip defined inside the CoreOS Vagrantfile).
+Add `export DOCKER_HOST=tcp://172.17.8.100:2375` to your `.zshrc` (or `.bashrc`) configuration file (as per the private ip defined inside the CoreOS Vagrantfile).
 
 Read: http://coreos.com/docs/launching-containers/building/customizing-docker/ but effectively the steps are:
 
