@@ -9,10 +9,10 @@
 
 Getting Docker set-up on a non-Linux environment (such as a Mac) can be done in one of two ways:
 
-1. Use Docker's "Boot2Docker" VM (which relies on Vagrant doing port forwarding)
-2. Use a CoreOS VM (with some modifications, such as exposing a private ip)
+1. Use Docker's "Boot2Docker" VM (uses VirtualBox to set-up the VM)
+2. Use a CoreOS VM via Vagrant (with some modifications, such as exposing a private ip)
 
-We're going to use the latter option as it is much more reliable (and less confusing) than port forwarding (i.e. Docker exposes ports for the VM to access, and then the VM needs to expose ports to the Host). Instead, the host just connects directly to the VM's private ip (although, as we'll see, the Docker daemon needs to be exposed too).
+We're going to use the latter option. The host will attempt to connect directly to the VM's private ip (although, as we'll see in the next section, the Docker daemon needs to be exposed too for that to happen).
 
 ## Exposing the Docker daemon
 
