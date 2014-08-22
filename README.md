@@ -43,3 +43,7 @@ WantedBy=sockets.target
 - `sudo systemctl start docker`
 - `exit`
 - `docker ps`
+
+## CMD vs ENTRYPOINT
+
+http://stackoverflow.com/questions/21553353/what-is-the-difference-between-cmd-and-entrypoint-in-a-dockerfile
