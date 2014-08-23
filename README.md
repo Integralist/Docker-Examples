@@ -96,7 +96,4 @@ end
 
 ## Example Docker Containers
 
-This repository has basic Dockerfiles for both NodeJS and Ruby Sinatra applications.
-
-- `docker build -t integralist/nodejs ./Node`
-- `docker build -t integralist/ruby ./Ruby`
+This repository has basic Dockerfiles for both NodeJS and Ruby Sinatra applications. To build the containers please read the instructions for each container.
