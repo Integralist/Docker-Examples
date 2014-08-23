@@ -1,12 +1,12 @@
 # Build from...
-FROM centos:6.4
+FROM centos:centos6
 
-# Enable EPEL for Node.js
-# https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#rhelcentosscientific-linux-6
+# Enable EPEL (Extra Packages for Enterprise Linux) for Node.js
+# https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#enterprise-linux-rhel-centos-fedora-etc
 RUN rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
 
 # Install Node.js and npm
-RUN yum install -y npm
+RUN yum install -y nodejs npm --enablerepo=epel
 
 # Bundle app source
 ADD . /src
@@ -17,7 +17,7 @@ RUN cd /src; npm install
 # The app binds to port 8080 so we'll expose it
 EXPOSE 8080
 
-# CMD doesn't run at build time 
+# CMD doesn't run at build time
 # it is the intended command for the container when run with `docker run`
 # if the user specifies arguments to `docker run` then they override the below CMD
 CMD ["node", "/src/index.js"]
