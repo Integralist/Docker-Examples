@@ -5,6 +5,7 @@
 - [Help with Docker commands](#help-with-docker-commands)
 - [CMD vs ENTRYPOINT](#cmd-vs-entrypoint)
 - [Alternative CoreOS/Vagrantfile](#alternative-coreosvagrantfile)
+- [Example Docker Containers](#example-docker-containers)
 
 ## Introduction
 
@@ -92,3 +93,10 @@ Vagrant.configure('2') do |config|
     :mount_options => ['nolock,vers=3,udp']
 end
 ```
+
+## Example Docker Containers
+
+This repository has basic Dockerfiles for both NodeJS and Ruby Sinatra applications.
+
+- `docker build -t integralist/nodejs ./Node`
+- `docker build -t integralist/ruby ./Ruby`
