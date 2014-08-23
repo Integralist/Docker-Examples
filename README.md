@@ -4,6 +4,7 @@
 - [Exposing the Docker daemon](#exposing-the-docker-daemon)
 - [Help with Docker commands](#help-with-docker-commands)
 - [CMD vs ENTRYPOINT](#cmd-vs-entrypoint)
+- [Alternative CoreOS/Vagrantfile](#alternative-coreosvagrantfile)
 
 ## Introduction
 
