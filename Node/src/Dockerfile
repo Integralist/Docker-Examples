@@ -17,5 +17,7 @@ RUN cd /src; npm install
 # The app binds to port 8080 so we'll expose it
 EXPOSE 8080
 
-# Run our app
+# CMD doesn't run at build time 
+# it is the intended command for the container when run with `docker run`
+# if the user specifies arguments to `docker run` then they override the below CMD
 CMD ["node", "/src/index.js"]
