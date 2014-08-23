@@ -78,6 +78,8 @@ If you did that for your Docker container then you could pass in a "command" to 
 
 ## Alternative CoreOS/Vagrantfile
 
+The following is a simplified `Vagrantfile`. It's similiar but minus the comments and also doesn't work-around everything that the `Vagrantfile` within this repo caters for:
+
 ```rb
 Vagrant.configure('2') do |config|
   config.vm.box = "coreos"
