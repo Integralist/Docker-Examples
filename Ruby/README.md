@@ -1,6 +1,4 @@
 ```bash
-cd src
-
 # Create an image from our Dockerfile
 docker build -t integralist/sinatra .
 
