@@ -9,10 +9,10 @@ RUN rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.
 RUN yum install -y nodejs npm --enablerepo=epel
 
 # Bundle app source
-ADD . /src
+ADD ./src /node-app
 
 # Install app dependencies
-RUN cd /src; npm install
+RUN cd /node-app; npm install
 
 # The app binds to port 8080 so we'll expose it
 EXPOSE 8080
@@ -20,4 +20,4 @@ EXPOSE 8080
 # CMD doesn't run at build time
 # it is the intended command for the container when run with `docker run`
 # if the user specifies arguments to `docker run` then they override the below CMD
-CMD ["node", "/src/index.js"]
+CMD ["node", "/node-app/index.js"]
