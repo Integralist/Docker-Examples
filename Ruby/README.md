@@ -2,14 +2,14 @@
 cd src
 
 # Create an image from our Dockerfile
-docker build -t integralist/nodejs .
+docker build -t integralist/sinatra .
 
 # Check the image was created
 docker images
 
 # Run a container (in the background using -d) from our image
 # Make sure to expose the port to the CoreOS VM (using -p host:container)
-docker run -p 8080:8080 -d integralist/nodejs
+docker run -p 4567:4567 -d integralist/sinatra
 
 # Check the container is running
 docker ps
@@ -20,5 +20,5 @@ docker logs {container_id}
 
 # Test you get the relevant response
 # Note: the ip is a private range ip defined in the CoreOS Vagrantfile
-curl -i http://172.17.8.100:8080/
+curl -i http://172.17.8.100:4567/
 ```
