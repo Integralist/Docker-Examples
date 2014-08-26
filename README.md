@@ -18,6 +18,8 @@ We're going to use the latter option. The host will attempt to connect directly 
 
 ## Exposing the Docker daemon
 
+> UPDATE: the Vagrantfile executes a `provision.sh` which automates all of the below steps for you
+
 If you just do a `vagrant up` and try to run a Docker command (such as `docker ps`) then you'll get an error, like: `Cannot connect to the Docker daemon. Is 'docker -d' running on this host?`.
 
 For the host to be able to use the Docker CLI, the Docker daemon on CoreOS needs to be exposed via a TCP port (as we're setting an ip address to access the CLI like so: `export DOCKER_HOST=tcp://172.17.8.100:2375`).
