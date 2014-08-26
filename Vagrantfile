@@ -31,9 +31,13 @@ Vagrant.configure("2") do |config|
   config.vm.network :private_network, ip: "172.17.8.100"
 
   # Enable NFS for sharing the host machine into the coreos-vagrant VM
-  config.vm.synced_folder ".", "/home/core/share", 
-                          id: "core", 
-                          :nfs => true, 
+  config.vm.synced_folder ".", "/home/core/share",
+                          id: "core",
+                          :nfs => true,
                           :mount_options => ['nolock,vers=3,udp']
+
+  config.vm.provision "shell" do |s|
+    s.path = "provision.sh"
+  end
 
 end
