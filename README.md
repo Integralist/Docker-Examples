@@ -6,6 +6,7 @@
 - [CMD vs ENTRYPOINT](#cmd-vs-entrypoint)
 - [Alternative CoreOS/Vagrantfile](#alternative-coreosvagrantfile)
 - [Example Docker Containers](#example-docker-containers)
+- [VMWare Provider](#vmware-provider)
 
 ## Introduction
 
@@ -99,3 +100,60 @@ end
 ## Example Docker Containers
 
 This repository has basic Dockerfiles for both NodeJS and Ruby Sinatra applications. To build the containers please read the instructions for each container.
+
+## VMWare Provider
+
+If you're using VMWare as your provider (e.g. `vagrant up --provider=vmware_fusion`) then you might run into an issue mounting your folders into the CoreOS VM.
+
+The error might look something like the following...
+
+```
+Bringing machine 'default' up with 'vmware_fusion' provider...
+==> default: Cloning VMware VM: 'coreos-alpha'. This can take some time...
+==> default: Checking if box 'coreos-alpha' is up to date...
+==> default: Verifying vmnet devices are healthy...
+==> default: Preparing network adapters...
+==> default: Fixed port collision for 22 => 2222. Now on port 2200.
+==> default: Starting the VMware VM...
+==> default: Waiting for machine to boot. This may take a few minutes...
+    default: SSH address: 172.16.82.134:22
+    default: SSH username: core
+    default: SSH auth method: private key
+==> default: Machine booted and ready!
+==> default: Forwarding ports...
+    default: -- 22 => 2200
+==> default: Setting hostname...
+==> default: Configuring network adapters within the VM...
+==> default: Exporting NFS shared folders...
+==> default: Preparing to edit /etc/exports. Administrator privileges will be required...
+==> default: Mounting NFS shared folders...
+The following SSH command responded with a non-zero exit status.
+Vagrant assumes that this means the command failed!
+
+mount -o 'nolock,vers=3,udp' 172.17.8.1:'/Users/foobar/path/to/current/directory' /home/core/share
+
+Stdout from the command:
+
+
+
+Stderr from the command:
+
+mount.nfs: access denied by server while mounting 172.17.8.1:/Users/foobar/path/to/current/directory
+```
+
+It turns out this might be an issue with CoreOS not assigning the private "host-only" network ip address properly: https://github.com/coreos/coreos-vagrant/issues/159#issuecomment-54267821
+
+If you were to `vagrant ssh` onto the box and run `ifconfig` you would notice the ip address assigned is not the one requested in the `Vagrantfile`. But if you then checked the CoreOS network settings (run `cat /etc/systemd/network/50-vagrant1.network`) then you'll see that the ip address listed matches what is defined inside our `Vagrantfile`.
+
+### Work around
+
+To work around this issue (temporarily, until an official fix is found) I would suggest running through the following steps:
+
+#### Host machine (i.e. your Mac)
+
+- Run `sudo vim /etc/exports/` and edit the relevant command so that the ip address (the one that matches what's defined in the `Vagrantfile`) is removed -> this means the VM makes the mount available to all users
+- Run `sudo nfsd restart`
+
+#### CoreOS VM
+
+- `sudo mount -o 'nolock,vers=3,udp' 172.17.8.1:'/Users/foo/path/to/directory' /home/core/share` (make sure to change `/Users/foo/path/to/directory` to your directory -> you can get this command out of the failed `vagrant up` output)
