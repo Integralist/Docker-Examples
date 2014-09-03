@@ -4,7 +4,12 @@ Vagrant.configure("2") do |config|
 
   config.vm.box = "coreos-%s" % $update_channel
   config.vm.box_version = ">= 308.0.1"
+
+  # Box URL (overridden for VMware)
   config.vm.box_url = "http://%s.release.core-os.net/amd64-usr/current/coreos_production_vagrant.json" % $update_channel
+  config.vm.provider :vmware_fusion do |vb, override|
+    override.vm.box_url = "http://%s.release.core-os.net/amd64-usr/current/coreos_production_vagrant_vmware_fusion.json" % $update_channel
+  end
 
   # VirtualBox doesn't have guest additions (or a functional vboxsf) in CoreOS
   # So here we're helping Vagrant to be smarter with its configuration
@@ -37,6 +42,7 @@ Vagrant.configure("2") do |config|
                           :mount_options => ['nolock,vers=3,udp']
 
   config.vm.provision "shell" do |s|
+    s.privileged = true
     s.path = "provision.sh"
   end
 
