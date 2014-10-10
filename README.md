@@ -56,6 +56,8 @@ WantedBy=sockets.target
 - `exit`
 - `docker ps`
 
+> Note: if you're using Ubuntu and not CoreOS then see https://github.com/Integralist/Linux-and-Docker-Development-Environment/blob/master/provision.sh#L49-L55 for example of exposing the Docker daemon ip
+
 ## Help with Docker commands
 
 - `docker help` lists all commands
