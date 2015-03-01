@@ -83,6 +83,9 @@ If you did that for your Docker container then you could pass in a "command" to 
 
 `docker run -i -t MY_IMAGE /etc/passwd` which would pass the command `/etc/passwd` to the `cat` command
 
+> You can also override the ENTRYPOINT via the command-line using the `--entrypoint` flag:  
+`docker run --rm -it --entrypoint=/bin/bash my_image`
+
 ## Alternative CoreOS/Vagrantfile
 
 The following is a simplified `Vagrantfile`. It's similiar but minus the comments and also doesn't work-around everything that the `Vagrantfile` within this repo caters for:
