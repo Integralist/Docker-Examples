@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require "sinatra"
 
 # Bind to ALL device interfaces
@@ -8,10 +10,16 @@ require "sinatra"
 # bind to all the available interfaces
 set :bind, "0.0.0.0"
 
-get "/" do
-  "Hello World"
-end
+configure { set :server, :puma }
 
-get "/foo" do
-  "Foo!"
+class App < Sinatra::Base
+  get "/" do
+    return "Hello World"
+  end
+
+  get "/foo" do
+    return "Foo!"
+  end
+
+  run! if app_file == $0
 end
