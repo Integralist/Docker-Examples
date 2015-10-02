@@ -20,5 +20,5 @@ get "/foo" do
 end
 
 get "/cert" do
-  "Client Cert DN: #{request["X-ClientCert-DN"]}"
+  request.env["HTTP_X_CLIENTCERT_DN"]
 end

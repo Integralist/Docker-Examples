@@ -24,6 +24,9 @@ Test the application is accessible via HTTPS:
 > Note: `<nginx_port>` can be found by running `docker ps`
 
 ```bash
+# Should error as HTTP used instead of HTTPS (nginx is setup to only listen on 443 not 80)
+curl http://$(docker-machine ip dev):<nginx_port>/
+
 # Should error as server's cert isn't trusted (i.e. it's self-signed)
 curl https://$(docker-machine ip dev):<nginx_port>/
 
@@ -64,5 +67,30 @@ docker run \
   speg03/curl --insecure \
               --key /var/cert/client.key \
               --cert /var/cert/client.crt \
-              http://$(docker-machine ip dev):32768/
+              https://$(docker-machine ip dev):$(docker port nginx-container 443 | awk -F ':' '{ print $2 }')/app/cert
 ```
+
+You should see something like the following output by the Ruby application
+
+```
+/CN=Mark McDonnell/emailAddress=mark@integralist.com
+```
+
+Now at this point you can parse your client certificate's CommonName (CN) however you like. In my application I just print it back out to the user, but in a real-world application you might want to use the details to present some nice personalised welcome message like "Hello Mark!" or whatever.
+
+Either way, you can only access the Ruby application if you provide a cert/key that was signed by the self-signed CA that is specified in the nginx configuration.
+
+If you were to try and provide a different cert/key (one that wasn't signed by the self-signed CA), then you'll see the following error response:
+
+```html
+<html>
+<head><title>400 The SSL certificate error</title></head>
+<body bgcolor="white">
+<center><h1>400 Bad Request</h1></center>
+<center>The SSL certificate error</center>
+<hr><center>nginx/1.4.6 (Ubuntu)</center>
+</body>
+</html>
+```
+
+Which is great. That is exactly what we want to see: denying access to our service unless properly authorised.
