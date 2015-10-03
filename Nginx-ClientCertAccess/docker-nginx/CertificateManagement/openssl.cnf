@@ -1,0 +1,87 @@
+#
+# OpenSSL configuration file.
+#
+
+# Establish working directory.
+dir            = .
+
+[ ca ]
+default_ca     = CA_default
+
+[ CA_default ]
+serial           = $dir/serial
+database         = $dir/certindex.txt
+new_certs_dir    = $dir/certs
+certificate      = $dir/ca.crt
+private_key      = $dir/private/ca.key
+default_days     = 365
+default_md       = md5
+default_crl_days = 30
+preserve         = no
+email_in_dn      = yes
+nameopt          = default_ca
+certopt          = default_ca
+policy           = policy_match
+crl_dir          = $dir/revoked
+crlnumber        = $crl_dir/crlnumber
+crl_extensions   = crl_ext
+x509_extensions  = usr_cert
+copy_extensions  = copy
+
+[ policy_match ]
+countryName            = match    # Must be the same as the CA
+stateOrProvinceName    = optional # not required
+organizationName       = optional # not required
+organizationalUnitName = optional # not required
+commonName             = supplied # must be there, whatever it is
+emailAddress           = supplied # must be there, whatever it is
+
+[ crl_ext ]
+authorityKeyIdentifier = keyid:always,issuer:always
+
+[ usr_cert ]
+basicConstraints       = CA:FALSE
+subjectKeyIdentifier   = hash
+authorityKeyIdentifier = keyid, issuer
+crlDistributionPoints  = URI:http://www.yourdomain.com/ca/crl.pem # this should be updated to be unique to the CA
+
+[ req ]
+default_bits       = 2048    # Size of keys
+default_keyfile    = key.pem # name of generated keys
+default_md         = md5     # message digest algorithm
+string_mask        = nombstr # permitted characters
+distinguished_name = req_distinguished_name
+req_extensions     = v3_req
+
+[ req_distinguished_name ]
+# Variable name				Prompt string
+#-------------------------	  ----------------------------------
+0.organizationName     = Organization Name (company)
+organizationalUnitName = Organizational Unit Name (department, division)
+emailAddress           = Email Address
+emailAddress_max       = 40
+localityName           = Locality Name (city, district)
+stateOrProvinceName    = State or Province Name (full name)
+countryName            = Country Name (2 letter code)
+countryName_min        = 2
+countryName_max        = 2
+commonName             = Common Name (hostname, IP, or your name)
+commonName_max         = 64
+
+# Default values for the above, for consistency and less typing.
+# Variable name				Value
+#------------------------	  ------------------------------
+0.organizationName_default  = My Company
+localityName_default        = My Town
+stateOrProvinceName_default = State or Providence
+countryName_default         = US
+
+[ v3_ca ]
+basicConstraints            = CA:TRUE
+subjectKeyIdentifier        = hash
+authorityKeyIdentifier      = keyid:always,issuer:always
+
+[ v3_req ]
+basicConstraints            = CA:FALSE
+subjectKeyIdentifier        = hash
+
