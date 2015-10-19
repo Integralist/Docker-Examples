@@ -49,8 +49,12 @@ docker run --name nginx-container \
   -v $(pwd)/docker-nginx/certs/ca.crt:/etc/nginx/certs/ca.crt \
   -v $(pwd)/docker-nginx/nginx.conf:/etc/nginx/nginx.conf:ro \
   --link ruby-app:app \
-  -P -d nginx
+  -p 60080:80 \
+  -p 60443:443 \
+  -d nginx
 ```
+
+> Note: I switched to using explicit ports (`-p`) from dynamic ports (`-P`) because nginx needed access to the port for redirecting HTTP to HTTPS, but it seems A.) that didn't work and B.) there is no other easy solution (see https://github.com/docker/docker/issues/3778)
 
 Curl the service endpoint:
 
@@ -72,42 +76,6 @@ There are two issues visting the above service endpoint via the browser:
 The first problem we can solve locally by opening up `/etc/hosts` and adding `192.168.99.100 integralist.com` (the ip might be different for you, but that ip is effectively the result of running `docker-machine ip dev`). You can now access the service endpoint via `https://integralist.com:32772/app/foo`
 
 The second problem is solved by `curl` using the `--insecure` flag and in the browser you either ignore the 'warning' presented, OR you can add the certificate to your operating system's certificate keychain (so it knows the issuing CA is trusted).
-
-## HTTP to HTTPS Redirection
-
-The nginx configuration will attempt to redirect HTTP traffic to HTTPS using a 301 redirect. This works, but be careful you recognise that Docker provides a different port number for HTTP `:80` compared to HTTPS `:443` (run `docker ps` to verify this).
-
-So if I was to go to my browser and type:
-
-```
-http://integralist.com:32783/app/
-```
-
-I would be redirected automatically to:
-
-```
-https://integralist.com:32782/app/
-```
-
-> Notice the protocol changes to HTTPS and the port number updates as well
-
-The only oddity is that in the browser it ends up downloading a file called `download` and this file seems to contain a single line of encoded content? So when using `curl` we find things don't work...
-
-```bash
-export dev_ip=$(docker-machine ip dev)
-export dev_80=$(docker port nginx-container 80 | awk -F ':' '{ print $2 }')
-export dev_443=$(docker port nginx-container 443 | awk -F ':' '{ print $2 }')
-
-# The following commands work, as they hit HTTPS...
-
-curl --insecure https://$dev_ip:$dev_443/app/
-curl --insecure https://$dev_ip:$dev_443/app/foo
-
-# The following commands don't work as the file download prevents HTTP redirection?
-
-curl --insecure http://$dev_ip:$dev_80/app/
-curl --insecure http://$dev_ip:$dev_80/app/foo
-```
 
 ## Debugging
 
